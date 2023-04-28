@@ -74,3 +74,4 @@ end
 
 gem 'sidekiq', '~> 4.1', '>= 4.1.2'
 gem 'memory_profiler'
+gem "interactor", "~> 3.0"
