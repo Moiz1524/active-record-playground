@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "home#index"
   mount Sidekiq::Web => "/sidekiq"
+
+  get 'performance_bites/one_column', to: "home#select_values_for_one_column", as: :one_column
 end
