@@ -1,1 +1,113 @@
-<h1>Hello</h1>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+  }
+
+  .header {
+    background-color: #2e8b57;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px;
+  }
+
+  .widget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+    max-width: 300px;
+    height: 200px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    margin: 1.5%;
+  }
+
+
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 18px;
+    text-align: center;
+    margin: 0;
+  }
+</style>
+
+<h1 class="header">Messing with 1M users</h1>
+
+<div class="container">
+  <div class="widget">
+    <h2>Performance Bite #1</h2>
+    <p>Large collection of records</p>
+    <br>
+    <a href="#">Use #each and #all</a>
+    <a href="#">Use #find_each</a>
+  </div>
+  <div class="widget">
+    <h2>Performance Bite #2</h2>
+    <p>Select values for one column</p>
+    <br>
+    <a href="<%= one_column_path(way: :not_recommended) %>">Use #map</a>
+    <a href="<%= one_column_path(way: :recommended) %>">Use #pluck</a>
+  </div>
+  <div class="widget">
+    <h2>Performance Bite #3</h2>
+    <p>Counting Records</p>
+    <br>
+    <a href="#">Use #length</a>
+    <a href="#">Use #count</a>
+    <a href="#">Use #size</a>
+  </div>
+  <div class="widget">
+    <h2>Performance Bite #4</h2>
+    <p>Bulk Insert and Update</p>
+    <br>
+    <a href="#">Use #each (loop)</a>
+    <a href="#">Use #insert_all</a>
+  </div>
+  <div class="widget">
+    <h2>Performance Bite #5</h2>
+    <p>Ruby Operations V/S SQL operations</p>
+    <br>
+    <a href="#">Use Ruby</a>
+    <a href="#">Use SQL</a>
+  </div>
+  <div class="widget">
+    <h2>Performance Bite #6</h2>
+    <p>Checking the Record presence</p>
+    <br>
+    <a href="#">Use #exists?</a>
+    <a href="#">Use #present?</a>
+    <a href="#">Use @collection.load.any?</a>
+  </div>
+  <div class="widget">
+    <h2>Performance Bite #7</h2>
+    <p>Bang Methods with Transactions</p>
+    <br>
+    <a href="#">Use #create</a>
+    <a href="#">Use #create!</a>
+  </div>
+  <div class="widget">
+    <h2>Performance Bite #8</h2>
+    <p>Difference b/w #delete and #destroy</p>
+    <br>
+    <a href="#">Use #delete</a>
+    <a href="#">Use #destroy</a>
+  </div>
+</div>
