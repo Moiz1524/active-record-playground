@@ -1,23 +1,17 @@
 # A playground where DB concepts are implemented via Active Record as ORM. Testing different optimization techniques here ..
 
 class HomeController < ApplicationController
-  def index
-    Benchmark.bm do |x|
-      x.report('A') do
-        # large_collection_of_records
-        select_values_for_one_column
-        # counting_records
+  def index; end
+
+  def select_values_for_one_column
+    @way = params[:way] || "not_recommended"
+
+    @benchmark_report = Benchmark.bm do |x| 
+      x.report('A') do 
+        result = Users::SingleColumn.call(request_params: { way: @way })
+        @users, @queried_through = result.users, result.queried_through
       end
-    end
-
-    # report = MemoryProfiler.report do
-    #   large_collection_of_records
-    #   select_values_for_one_column
-    #   counting_records
-    #   
-    # end
-
-    # report.pretty_print(scale_bytes: true)
+    end.first
   end
 
   private
@@ -32,14 +26,6 @@ class HomeController < ApplicationController
     # use it like an ordinary each method to iterate through all items in the collection:
 
     User.find_each { |user| puts user.id }
-  end
-
-  def select_values_for_one_column
-    # Avoid: using map or collect directly on the collection produced by the Active Record:
-    # User.where(age: 30).map(&:email)
-
-    # Use: pluck to narrow the query to the database and reduce the time needed to pull the records:
-    # User.where(age: 30).pluck(:email)
   end
 
   # It’s enough for you to memorize the following:
