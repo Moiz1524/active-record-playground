@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => "/sidekiq"
 
   get 'performance_bites/one_column', to: "home#select_values_for_one_column", as: :one_column
+  get "performance_bites/counting_records", to: "home#counting_records", as: :counting_records
 end

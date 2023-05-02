@@ -14,6 +14,17 @@ class HomeController < ApplicationController
     end.first
   end
 
+  def counting_records
+    @way = params[:way] || "length"
+
+    @benchmark_report = Benchmark.bm do |x|
+      x.report('A') do
+        result = Users::CountRecord.call(request_params: { way: @way })
+        @users_count, @queried_through = result.users_count, result.queried_through
+      end
+    end.first
+  end
+
   private
 
   def large_collection_of_records
@@ -26,17 +37,6 @@ class HomeController < ApplicationController
     # use it like an ordinary each method to iterate through all items in the collection:
 
     User.find_each { |user| puts user.id }
-  end
-
-  # It’s enough for you to memorize the following:
-  # When you use length, it always loads all records into memory and then counts them
-  # Use count if you want to perform SQL count query as this method always does it even when you pulled the collection earlier
-  # size is the most flexible one as it performs SQL count query if records are not loaded in the memory and it counts the elements from memory when they are already loaded
-  # An additional advantage of using size is that you can benefit from using cache counters as Active Record handles them automatically.
-  def counting_records
-    # User.all.length
-    # User.count
-    # User.all.size
   end
 
   def creating_records
