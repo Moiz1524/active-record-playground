@@ -5,7 +5,7 @@
 # An additional advantage of using size is that you can benefit from using cache counters as Active Record handles them automatically.
 
 module Users
-  class CountRecord < BaseInteractor
+  class Count < BaseInteractor
     def call
       users_count = count_records_by_way
       context.users_count = users_count
