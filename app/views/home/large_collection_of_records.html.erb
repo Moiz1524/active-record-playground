@@ -1,0 +1,10 @@
+<p>Avoid: using each and all with Active Record queries that are designed to return many records:</p>
+
+<p>User.all.each do |user|</p>
+<p>puts user.id</p>
+<p>end</p>
+
+<p>Use: find_each to pull records in batches. It won’t load all records into the database and you can </p>
+<p>use it like an ordinary each method to iterate through all items in the collection:</p>
+
+<p>User.find_each { |user| puts user.id }</p>

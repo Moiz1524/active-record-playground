@@ -1,0 +1,16 @@
+<p>Using bang methods is extremely important when dealing with database transactions.</p>
+
+<p>Avoid: using non-bang methods when dealing with transactions as transaction won’t be rollbacked when the record won’t be saved:</p>
+  
+<p>User.transaction do</p>
+  <p>user = User.create(first_name: "Moiz", last_name: "Ali")</p>
+  <p>SomeService.call(user)</p>
+<p>end</p>
+
+  
+<p>Use: bang methods to rollback the whole transaction in case of a problem. The whole idea behind the transactions is to achieve “all or nothing” state where all steps of the process are completed or none of them is performed:</p>
+
+<p>User.transaction do</p>
+  <p>user = User.create!(first_name: "Moiz", last_name: "Ali")</p>
+  <p># SomeService.call(user)</p>
+<p>end</p>

@@ -3,6 +3,10 @@
 class HomeController < ApplicationController
   def index; end
 
+  def large_collection_of_records
+    
+  end
+
   def select_values_for_one_column
     @way = params[:way] || "not_recommended"
 
@@ -19,76 +23,46 @@ class HomeController < ApplicationController
 
     @benchmark_report = Benchmark.bm do |x|
       x.report('A') do
-        result = Users::CountRecord.call(request_params: { way: @way })
+        result = Users::Count.call(request_params: { way: @way })
         @users_count, @queried_through = result.users_count, result.queried_through
       end
     end.first
   end
 
-  private
-
-  def large_collection_of_records
-    # Avoid: using each and all with Active Record queries that are designed to return many records:
-    # User.all.each do |user|
-    #   puts user.id
-    # end
-
-    # Use: find_each to pull records in batches. It won’t load all records into the database and you can 
-    # use it like an ordinary each method to iterate through all items in the collection:
-
-    User.find_each { |user| puts user.id }
-  end
-
   def creating_records
-    # Avoid: creating records in loop:
-    # 1.upto(1_000_000) do
-    #   user = User.create!(
-    #     first_name: FFaker::Name.first_name,
-    #     last_name: FFaker::Name.last_name,
-    #     age: (1..99).to_a.sample,
-    #     email: FFaker::Internet.email
-    #   )
+    @way = params[:way] || "each"
 
-    #   puts "User created with id: #{user.id}"
-    # end
-
-    # Use: create records in bulk
-    # users_data = {}
-    # User.insert_all(users_data)
+    @benchmark_report = Benchmark.bm do |x|
+      x.report('A') do
+        result = Users::Create.call(request_params: { way: @way })
+        @users, @queried_through = result.users, result.queried_through
+      end
+    end.first
   end
-
-  def ruby_or_sql_operations_on_data
-    # Avoid: doing with Ruby operations that can be performed on SQL level
-    # User.where(age: 51).select { |user| user.first_name.starts_with?('A') }.take(10)
-
-    # Use: SQL to perform actions for better performance
-    User.where(age: 51).where("first_name LIKE '%A'").limit(10)
-  end
-
-  # Another simple yet tricky thing. Rails developers got used to use .present? or .blank? for checking the presence 
-  # of the data given variable or collection. However, calling these methods on Active Record’s collection can introduce performance problems.
-  # If you don’t want to mess up the performance, remember:
-
-  # Calling .exists? will trigger an SQL query even if records are already loaded into the memory
-  # Calling .present? or .blank? will load records into memory so use them only if you are doing something else with these records later on
-  # If you want to load the collection and check for its existence, use @collection.load.any?, @collection.load.none? or @collection.load.none?
-  def check_record_presence?
+  
+  def ruby_or_sql_operations
+    @way = params[:way] || "ruby"
     
+    @benchmark_report = Benchmark.bm do |x|
+      x.report('A') do
+        result = Users::Operation.call(request_params: { way: @way })
+        @users, @queried_through = result.users, result.queried_through
+      end
+    end.first
   end
 
-  def bang_methods_with_transactions
-    # Using bang methods is extremely important when dealing with database transactions.
+  def records_presence
+    @way = params[:way] || "collection.load"
 
-    # Avoid: using non-bang methods when dealing with transactions as transaction won’t be rollbacked when the record won’t be saved:
-    # User.transaction do
-    #   user = User.create(first_name: "Moiz", last_name: "Ali")
-      # SomeService.call(user)
-    # end
-
-    # Use: bang methods to rollback the whole transaction in case of a problem. The whole idea behind the transactions is to achieve “all or nothing” state where all steps of the process are completed or none of them is performed:
-    User.transaction do
-      user = User.create!(first_name: "Moiz", last_name: "Ali")
-      # SomeService.call(user)
-    end
+    @benchmark_report = Benchmark.bm do |x|
+      x.report('A') do
+        result = Users::Presence.call(request_params: { way: @way })
+        @users_presence, @queried_through = result.users_presence, result.queried_through
+      end
+    end.first
   end
+
+  def records_transactions; end
+
+  def records_deletion; end
 end

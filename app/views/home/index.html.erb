@@ -56,8 +56,7 @@
     <h2>Performance Bite #1</h2>
     <p>Large collection of records</p>
     <br>
-    <a href="#">Use #each and #all</a>
-    <a href="#">Use #find_each</a>
+    <a href="<%= large_records_collection_path %>">Use #each, #find_each and #all</a>
   </div>
   <div class="widget">
     <h2>Performance Bite #2</h2>
@@ -78,36 +77,34 @@
     <h2>Performance Bite #4</h2>
     <p>Bulk Insert and Update</p>
     <br>
-    <a href="#">Use #each (loop)</a>
-    <a href="#">Use #insert_all</a>
+    <a href="<%= bulk_insert_path(way: "each") %>">Use #each (loop)</a>
+    <a href="<%= bulk_insert_path(way: "insert_all") %>">Use #insert_all</a>
   </div>
   <div class="widget">
     <h2>Performance Bite #5</h2>
     <p>Ruby Operations V/S SQL operations</p>
     <br>
-    <a href="#">Use Ruby</a>
-    <a href="#">Use SQL</a>
+    <a href="<%= ruby_vs_sql_ops_path(way: "ruby") %>">Use Ruby</a>
+    <a href="<%= ruby_vs_sql_ops_path(way: "sql") %>">Use SQL</a>
   </div>
   <div class="widget">
     <h2>Performance Bite #6</h2>
     <p>Checking the Record presence</p>
     <br>
-    <a href="#">Use #exists?</a>
-    <a href="#">Use #present?</a>
-    <a href="#">Use @collection.load.any?</a>
+    <a href="<%= records_presence_path(way: "exists") %>">Use #exists?</a>
+    <a href="<%= records_presence_path(way: "present") %>">Use #present?</a>
+    <a href="<%= records_presence_path(way: "collection.load") %>">Use @collection.load.any?</a>
   </div>
   <div class="widget">
     <h2>Performance Bite #7</h2>
     <p>Bang Methods with Transactions</p>
     <br>
-    <a href="#">Use #create</a>
-    <a href="#">Use #create!</a>
+    <a href="<%= records_transactions_path %>">Use #create or #create!</a>
   </div>
   <div class="widget">
     <h2>Performance Bite #8</h2>
     <p>Difference b/w #delete and #destroy</p>
     <br>
-    <a href="#">Use #delete</a>
-    <a href="#">Use #destroy</a>
+    <a href="<%= records_deletion_path %>">#delete or #destroy</a>
   </div>
 </div>

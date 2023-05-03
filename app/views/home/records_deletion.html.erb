@@ -1,0 +1,2 @@
+<p>The most important difference is that when you call destroy, all related callbacks from the model are called, and when you call delete you just simply delete the record from the database. Because of that, the delete option is faster.</p>
+<p>If you just want to remove the record without triggering any workflows, validations, and other callbacks, simply go for delete. Otherwise use destroy which is a standard way of removing records from the database in a typical Rails application.</p>
